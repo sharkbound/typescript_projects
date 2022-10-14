@@ -45,8 +45,8 @@ interface ItemEvent<T extends Item> extends BaseEvent {
 
 
 interface Database<T extends Item> {
-    add: (T) => void
-    remove: (T) => void
+    add: (item: T) => void
+    remove: (item: T) => void
 }
 
 type EventTypeOptions = 'add' | 'remove' | 'delete' | 'any'
@@ -112,7 +112,7 @@ class ItemDatabase<T extends Item> implements Database<T> {
     }
 
     findBest(scoreFunc: (item: T) => number | undefined): T | undefined {
-        let best: { score: number, item: T } = {score: undefined, item: undefined}
+        let best: { score: number | undefined, item: T | undefined } = {score: undefined, item: undefined}
         Object.values(this.items).reduce((best, item) => {
             let score = scoreFunc(item)
             if (score === undefined) {
